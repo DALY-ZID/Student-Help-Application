@@ -1,0 +1,19 @@
+{% extends 'StudentHelp/base.html' %}
+
+
+
+{% block title %}
+-DashBoard
+{% endblock %}
+
+
+{% block content %}
+
+
+<h1>HELLO ' {{user}} ' </h1> 
+<br>
+<p><a href="{% url 'password_change' %}">changer votre password</a></p>
+<p><a href="{% url 'index' %}">index</a></p>
+<p><a href="{% url 'logout' %}">Déconnexion</a></p>
+
+{% endblock %}

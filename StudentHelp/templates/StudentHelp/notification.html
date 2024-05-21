@@ -1,0 +1,54 @@
+{% extends 'StudentHelp/base.html' %}
+
+{% block content %}
+<style>
+    .notification {
+        background-color: #f7f7f7;
+        border-radius: 8px;
+        padding: 16px;
+        margin-bottom: 16px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .notification p {
+        margin: 0;
+    }
+
+    .notification .timestamp {
+        font-size: 14px;
+        color: #888;
+        margin-top: 8px;
+    }
+
+    .notification:hover {
+        background-color: #f2f2f2;
+    }
+
+    .notification:last-child {
+        margin-bottom: 0;
+    }
+
+    .notification-empty {
+        text-align: center;
+        color: #888;
+        padding: 32px 0;
+    }
+</style>
+
+<div class="container my-5">
+    <h2 class="mb-4">Notifications</h2>
+
+    {% if notifications %}
+        {% for notification in notifications %}
+        <div class="notification">
+            <p>{{ notification.content }}</p>
+            <p class="timestamp">{{ notification.created_at }}</p>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="notification-empty">
+            <p>Aucune notification</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

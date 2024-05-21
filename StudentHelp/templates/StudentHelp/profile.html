@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="George W. Park">
+    <meta name="description" content="This project demonstrates how CSS grid (with flexbox and float fallback) can be used to re-create the layout of an Instagram profile page.">
+
+    <!-- Title -->
+    <title>StudentHelp Profile Layout</title>
+
+    <!-- External CSS Files -->
+    <link rel="stylesheet" href="{% static 'assets3/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'assets3/style.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+
+</head>
+<body>
+
+    <header>
+
+        <div class="container">
+
+            <div class="profile">
+
+                <div class="profile-image">
+
+                    <img src="{{profile.image.url}}" alt="" style="width: 200px; height: 200px;">
+
+                </div>
+
+                <div class="profile-user-settings">
+                    <h1 class="profile-user-name">{{profile.user.username}}</h1>
+                    
+                    {% if profile.user.username == request.user.username %}
+                        <a href="{% url 'editProfile' profile.user.username %}"><button class="btn profile-edit-btn">Edit Profile</button></a>
+                        <a href="{% url 'password_change' %}"><button class="btn profile-edit-btn">Change password</button></a>
+
+                    {% endif %}
+                    <button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+
+                </div>
+
+                <div class="profile-stats">
+
+                    <ul>
+                        <li><span class="profile-stat-count">{{posts_count}}</span> posts</li>
+
+                    </ul>
+
+                </div>
+
+                <div class="profile-bio">
+                    {% if profilefirst_name %}
+                    <p><span class="profile-real-name">{{profile.first_name}} {{profile.last_name}}</span> <br>{{profile.bio}}</p>
+                    {% endif %}
+                </div>
+
+            </div>
+            <!-- End of profile section -->
+
+        </div>
+        <!-- End of container -->
+
+    </header>
+
+    <main>
+
+        <div class="container">
+            <div class="gallery">
+                {% for post in posts %}
+                
+                    {% if post.image %}
+                
+                        <a href="{% url 'post-details' post.id %}">
+                            <div class="gallery-item" tabindex="0">
+                                <img src="/media/{{post.image}}" class="gallery-image" alt="" style="height:400px; object-fit: cover; object-position: center; margin-right: 2px; margin-bottom: 2px;">
+                            
+                                <div class="gallery-item-info">
+                                    <ul>
+                                        <li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{post.likes }}</li>
+                                        <li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i>{{post.comment.count}}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        
+        
+
+            <!-- End of gallery -->
+
+            <!-- <div class="loader"></div> -->
+
+        </div>
+        <!-- End of container -->
+
+    </main>
+
+</body>
+</html>
